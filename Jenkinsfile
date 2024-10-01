@@ -30,9 +30,7 @@ pipeline{
             }
         }
          stage('BuildCode'){
-              agent{
-                 label 'linux_node'
-             }
+            
             steps{
                 sh 'mvn package'
             }
