@@ -1,38 +1,26 @@
 pipeline{
-    agent any
-    tools{
-        maven 'mymaven'
+    agent {
+        label 'linux_node'
+    }
+    parameters{
+        string(name: 'PERSON',defaultValue: 'Mr.Jenkins',description: 'Give name of the Person ')
+        text(name: 'BIOGRAPHY', defaultValue: '', description: 'Enter some information about the person')
+        booleanParam(name: 'TOGGLE', defaultValue: true, description: 'Toggle this value')
+        choice(name: 'CHOICE', choices: ['One', 'Two', 'Three'], description: 'Pick something')
+        password(name: 'PASSWORD', defaultValue: 'SECRET', description: 'Enter a password')
     }
     stages{
-        stage('clone Repo'){
-           
+        stage('use Parameters'){
             steps{
-                git 'https://github.com/Sonal0409/DevOpsCodeDemo.git'
-            }
-        }
-        stage('CompileCode'){
-            
-            steps{
-              
-                sh 'mvn compile'
-            }
-        }
-         stage('ReviewCode'){
-          
-            steps{
-                sh 'mvn pmd:pmd'
-            }
-        }
-         stage('TestCode'){
-            
-            steps{
-                sh 'mvn test'
-            }
-        }
-         stage('BuildCode'){
-            
-            steps{
-                sh 'mvn package'
+                echo "Hello ${params.PERSON}"
+                
+                echo "Hello ${params.BIOGRAPHY}"
+                
+                echo "Toggle: ${params.TOGGLE}"
+
+                echo "Choice: ${params.CHOICE}"
+
+                echo "Password: ${params.PASSWORD}"
             }
         }
     }
